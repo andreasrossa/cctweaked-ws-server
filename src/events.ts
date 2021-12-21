@@ -23,6 +23,7 @@ const turtleEventHandlers: TurtleEventHandlers = {
 	},
 	register: (socket: Socket, args, callback) => {
 		console.log("got register event with: ", args)
+		throw new Error("bruh")
 	}
 }
 

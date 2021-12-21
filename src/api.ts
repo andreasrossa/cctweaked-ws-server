@@ -16,3 +16,8 @@ export const get400Response = (message: string): BadRequestErrorResponse => ({
 	status: 400,
 	message,
 })
+
+export const get500Response = (message: string): APIResponse => ({
+	status: 500,
+	message,
+})
