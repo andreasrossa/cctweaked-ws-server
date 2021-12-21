@@ -1,17 +1,10 @@
 import { Socket } from "socket.io"
+import { APIResponse, get200Response, get400Response } from "./api"
 
 export type EventTypes = "register" | "run"
-export type EventHandler = (socket: Socket, args: unknown) => void
+export type EventHandler = (socket: Socket, args: unknown, callback: (response: APIResponse) => void) => void
 
 export type TurtleEventHandlers = Record<EventTypes, EventHandler>
-
-export class EventValidationException extends Error {
-	constructor(msg: string) { super(msg) }
-}
-
-export class EventGenericException extends Error {
-	constructor(msg: string) { super(msg) }
-}
 
 export type HasCommand = { command: string }
 
@@ -20,14 +13,15 @@ export function hasCommand(x: any): x is HasCommand {
 }
 
 const turtleEventHandlers: TurtleEventHandlers = {
-	run: (socket: Socket, args) => {
+	run: (socket: Socket, args, callback) => {
 		if(!hasCommand(args)) {
-			throw new EventValidationException(`expected { command: string }, was ${typeof args} (${JSON.stringify(args)})`)
+			callback(get400Response("missing command key"))
 		}
 		
 		console.log("got run event with: ", JSON.stringify(args))
+		callback(get200Response())
 	},
-	register: (socket: Socket, args) => {
+	register: (socket: Socket, args, callback) => {
 		console.log("got register event with: ", args)
 	}
 }
