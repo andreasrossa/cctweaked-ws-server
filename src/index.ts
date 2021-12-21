@@ -1,9 +1,8 @@
 import { Server, Socket } from "socket.io";
 import express from "express";
 import http from "http";
-import turtleEventHandlers, { EventHandler, getCatchableHandler } from "./events";
-import _, { isError } from "lodash"
-import { get500Response } from "./api";
+import _ from "lodash"
+import turtleEventHandlers, { getCatchableHandler } from "./events";
 
 const PORT = 3000
 
