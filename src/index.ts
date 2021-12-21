@@ -1,7 +1,7 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import express from "express";
 import http from "http";
-import turtleEventHandlers, { EventHandler } from "./events";
+import turtleEventHandlers, { EventHandler, getCatchableHandler } from "./events";
 import _, { isError } from "lodash"
 import { get500Response } from "./api";
 
@@ -12,27 +12,21 @@ const server = http.createServer(app)
 
 const io = new Server(server)
 
-const getCatchableHandler = (handler: EventHandler): EventHandler => {
-	return (socket, args, callback) => {
-		try {
-			handler(socket, args, callback)
-		} catch (e) {
-			console.error(e)
-			callback(get500Response(isError(e) ? e.message : JSON.stringify(e)))
-		}
-		}
-	}
-
-
 io.on("connection", (socket) => {
 	console.log(`Client connected: #${socket.id}`)
 	socket.broadcast.emit(`Client connected: #${socket.id}`)
-	Object.entries(turtleEventHandlers).forEach(([event, handler]) => {
-		const curriedHandler = _.curry(getCatchableHandler(handler))(socket)
-		socket.addListener(event, curriedHandler)
-	})
+	addListeners(socket);
 })
 
 server.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}...`)
 })
+
+
+function addListeners(socket: Socket) {
+	Object.entries(turtleEventHandlers).forEach(([event, handler]) => {
+		const curriedHandler = _.curry(getCatchableHandler(handler))(socket);
+		socket.addListener(event, curriedHandler);
+	});
+}
+

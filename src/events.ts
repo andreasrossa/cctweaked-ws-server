@@ -1,5 +1,6 @@
+import { isError } from "lodash"
 import { Socket } from "socket.io"
-import { APIResponse, get200Response, get400Response } from "./api"
+import { APIResponse, get200Response, get400Response, get500Response } from "./api"
 
 export type EventTypes = "register" | "run"
 export type EventHandler = (socket: Socket, args: unknown, callback: (response: APIResponse) => void) => void
@@ -27,6 +28,17 @@ const turtleEventHandlers: TurtleEventHandlers = {
 	}
 }
 
+
+export const getCatchableHandler = (handler: EventHandler): EventHandler => {
+	return (socket, args, callback) => {
+		try {
+			handler(socket, args, callback)
+		} catch (e) {
+			console.error(e)
+			callback(get500Response(isError(e) ? e.message : JSON.stringify(e)))
+		}
+		}
+	}
 
 
 export default turtleEventHandlers
