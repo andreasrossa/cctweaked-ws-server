@@ -2,7 +2,8 @@ import { Server, Socket } from "socket.io";
 import express from "express";
 import http from "http";
 import _ from "lodash"
-import turtleEventHandlers, { getCatchableHandler } from "./events";
+import turtleEventHandlers, { getCatchableHandler, TurtleEventHandlers } from "./events";
+import { addListeners } from "./utils";
 
 const PORT = 3000
 
@@ -14,7 +15,7 @@ const io = new Server(server)
 io.on("connection", (socket) => {
 	console.log(`Client connected: #${socket.id}`)
 	socket.broadcast.emit(`Client connected: #${socket.id}`)
-	addListeners(socket);
+	addListeners(turtleEventHandlers, socket);
 })
 
 server.listen(PORT, () => {
@@ -22,10 +23,4 @@ server.listen(PORT, () => {
 })
 
 
-function addListeners(socket: Socket) {
-	Object.entries(turtleEventHandlers).forEach(([event, handler]) => {
-		const curriedHandler = _.curry(getCatchableHandler(handler))(socket);
-		socket.addListener(event, curriedHandler);
-	});
-}
 

@@ -2,10 +2,9 @@ import { isError } from "lodash"
 import { Socket } from "socket.io"
 import { APIResponse, get200Response, get400Response, get500Response } from "./api"
 
-export type EventTypes = "register" | "run"
 export type EventHandler = (socket: Socket, args: unknown, callback: (response: APIResponse) => void) => void
 
-export type TurtleEventHandlers = Record<EventTypes, EventHandler>
+export type TurtleEventHandlers = Record<string, EventHandler>
 
 export type HasCommand = { command: string }
 
