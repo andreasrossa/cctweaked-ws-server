@@ -1,8 +1,6 @@
 import { Server } from "socket.io";
-import { Socket as ServerSocket } from "socket.io"
-import Client, { Socket as ClientSocket } from "socket.io-client" 
-import { createServer } from "http"
-import { AddressInfo } from "net"
+import * as socketIo from "socket.io"
+import { Socket as ClientSocket } from "socket.io-client" 
 import { addListeners } from "../../src/utils";
 import eventHandlers from "../../src/event/handlers"
 import clientCache from "../../src/clientCache";
@@ -11,7 +9,7 @@ import { createTestingSetup } from "./utils";
 
 
 describe("Registration event", () => {
-	let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
+	let io: Server, serverSocket: socketIo.Socket, clientSocket: ClientSocket;
 
 	beforeAll((done) => {
 		createTestingSetup((s) => {
@@ -29,6 +27,7 @@ describe("Registration event", () => {
 
 	beforeEach(() => {
 		clientCache.clear();
+		clientSocket.removeAllListeners()
 	})
 
 		
