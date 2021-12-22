@@ -33,8 +33,9 @@ jobs:
         name: build
         path: |
           dist
+          Dockerfile
           package.json
-          lock.yaml
+          yarn.lock
 
   dockerize:
     needs: build
