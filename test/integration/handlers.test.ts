@@ -2,9 +2,9 @@ import { createServer } from "http"
 import { AddressInfo } from "net"
 import { Server, Socket as ServerSocket } from "socket.io"
 import Client, { Socket as ClientSocket } from "socket.io-client"
-import { get200Response } from "../src/api";
-import { TurtleEventHandlers } from "../src/events";
-import { addListeners } from "../src/utils";
+import { get200Response } from "../../src/api";
+import { TurtleEventHandlers } from "../../src/events";
+import { addListeners } from "../../src/utils";
 
 const errorMsg = "bruh"
 
