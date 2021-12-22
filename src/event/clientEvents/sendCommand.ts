@@ -1,0 +1,1 @@
+export const sendCommand = (command: string) => ({ command })

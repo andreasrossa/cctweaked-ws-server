@@ -3,12 +3,13 @@ import { AddressInfo } from "net"
 import { Server, Socket as ServerSocket } from "socket.io"
 import Client, { Socket as ClientSocket } from "socket.io-client"
 import { get200Response } from "../../src/api";
-import { TurtleEventHandlers } from "../../src/events";
+import { EventHandlerMap } from "../../src/event/events";
 import { addListeners } from "../../src/utils";
+import { createTestingSetup } from "./utils";
 
 const errorMsg = "bruh"
 
-const testHandlers: TurtleEventHandlers = {
+const testHandlers: EventHandlerMap = {
 	success: (socket: ServerSocket, args, callback) => {
 		callback(get200Response())
 	},
@@ -21,17 +22,12 @@ describe("event handlers", () => {
   let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
 
   beforeAll((done) => {
-    const httpServer = createServer();
-    io = new Server(httpServer);
-    httpServer.listen(() => {
-      const port = (httpServer.address() as AddressInfo | null)?.port ?? 0;
-      clientSocket = Client(`http://localhost:${port}`);
-      io.on("connection", (socket) => {
-				addListeners(testHandlers, socket);
-        serverSocket = socket;
-      });
-      clientSocket.on("connect", done);
-    });
+    createTestingSetup((s) => {
+			addListeners(testHandlers, s);
+		}).then(r => {
+			[io, serverSocket, clientSocket] = r;
+			done();
+		})
   });
 
   afterAll(() => {

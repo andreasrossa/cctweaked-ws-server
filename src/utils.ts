@@ -1,8 +1,8 @@
 import _ from "lodash";
 import { Socket } from "socket.io";
-import { getCatchableHandler, TurtleEventHandlers } from "./events";
+import { getCatchableHandler, EventHandlerMap } from "./event/events";
 
-export function addListeners(handlers: TurtleEventHandlers, socket: Socket) {
+export function addListeners(handlers: EventHandlerMap, socket: Socket) {
 	Object.entries(handlers).forEach(([event, handler]) => {
 		const curriedHandler = _.curry(getCatchableHandler(handler))(socket);
 		socket.addListener(event, curriedHandler);
