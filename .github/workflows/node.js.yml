@@ -37,7 +37,7 @@ jobs:
           ./yarn.lock
 
   dockerize:
-
+    needs: build
     runs-on: ubuntu-latest
 
     steps: 
