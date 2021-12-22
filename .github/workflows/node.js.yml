@@ -60,4 +60,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ github.actor }}/cc-server:latest
+          tags: andreasrossa/cctweaked-ws-server/cc-server:latest
