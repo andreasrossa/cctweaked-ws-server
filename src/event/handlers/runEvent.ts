@@ -1,8 +1,8 @@
-import { get200Response, get500Response } from "../../api"
+import { ClientQuery, get200Response, get500Response, hasClientQuery } from "../../api"
 import clientCache from "../../clientCache"
 import IO from "../../ioContainer"
 import clientEventFactories from "../clientEvents"
-import { ClientQuerySelector, EventHandler, hasClientQuery } from "../events"
+import { EventHandler } from "../events"
 
 export type HasCommand = { command: string }
 
@@ -10,7 +10,7 @@ export function hasCommand(x: any): x is HasCommand {
 	return "command" in x && typeof x.command === "string"
 }
 
-export type RunEventArgs = HasCommand & ClientQuerySelector
+export type RunEventArgs = HasCommand & ClientQuery
 
 const isRunEventArgs = (x: any): x is RunEventArgs => hasCommand(x) && hasClientQuery(x)
 
@@ -22,7 +22,7 @@ const handleRun: EventHandler = (socket, args, callback) => {
 
 	const { command, ...clientQuery } = args
 	
-	const clients = clientCache.query(clientQuery)
+	const clients = clientCache.query(clientQuery.query)
 
 	console.log("Queried clients:", clients, clientQuery, clientCache.getClientList())
 
