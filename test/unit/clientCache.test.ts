@@ -104,6 +104,47 @@ describe("client cache", () => {
 		expect(queriedClients[0]).toStrictEqual(clients[0]);
 	})
 
+	it("correctly uses matchType to determine if a client matches a query", (done) => {
+		const clients = [
+			{
+				id: "client1",
+				metadata: {
+					group: ["group1"]
+				}
+			},
+			{
+				id: "client2",
+				metadata: {
+					group: ["group2"]
+				}
+			},
+			{
+				id: "client3",
+				metadata: {
+					group: ["group3", "group2"]
+				}
+			},
+			{
+				id: "client4",
+				metadata: {
+					group: ["group3", "group2", "group1000"]
+				}
+			},
+		]
+
+		clients.forEach((client, i) => clientsCache.addClient({...client, socketId: `socket${i}`}));
+
+		expect(clientsCache.query({metadata: {group: ["group1"]}}).length).toBe(1);
+		expect(clientsCache.query({metadata: {group: ["group2"]}}).length).toBe(3);
+		expect(clientsCache.query({metadata: {group: ["group3"]}}).length).toBe(2);
+
+		expect(clientsCache.query({metadata: {group: ["group1000", "group1"]}, matchType: {group: "any"}}).length).toBe(2);
+		expect(clientsCache.query({metadata: {group: ["group1000", "group1"]}, matchType: {group: "all"}}).length).toBe(0);
+		expect(clientsCache.query({metadata: {group: ["group2"]}, matchType: {group: "any"}}).length).toBe(3);
+
+		done()
+	})
+
 })
 
 function getClients(n: number): Client[] {
