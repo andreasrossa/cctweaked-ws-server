@@ -24,6 +24,11 @@ const handleRegister: EventHandler = (socket, args, callback) => {
 		return
 	}
 
+	if( ! Object.values(args.metadata ?? {}).every(it => it instanceof Array)) {
+		callback(get500Response("Metadata must be an array"))
+		return
+	}
+
 	const newClient: Client = {
 		id: args.id,
 		metadata: args.metadata ?? {},
