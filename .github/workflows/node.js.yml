@@ -15,13 +15,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: borales/actions-yarn@v2.3.0
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v2
       with:
-        cmd: install # will run `yarn install` command
-    - uses: borales/actions-yarn@v2.3.0
+        node-version: '14'
+    - name: Run yarn install
+      run: yarn install
+    - name: Run build
+      run: yarn build
+    - name: Run tests 
+      run: yarn test
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
       with:
-        cmd: build # will run `yarn build` command
-    - uses: borales/actions-yarn@v2.3.0
-      with:
-        cmd: test # will run `yarn test` command
+        name: build
+        path: |
+          dist
+          ./package.json
+          ./yarn.lock
+
+  dockerize:
+
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: /app
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: /app
+          push: true
+          tags: user/app:latest
