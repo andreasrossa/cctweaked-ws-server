@@ -44,7 +44,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: my-artifact
+          name: build
           path: /app
       - name: Build and push
         id: docker_build
