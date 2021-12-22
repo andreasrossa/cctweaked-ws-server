@@ -31,7 +31,7 @@ const handleRun: EventHandler = (socket, args, callback) => {
 		IO.get().to(client.socketId).emit("runlua", clientEventFactories.sendCommand(command))
 	})
 
-	callback(get200Response())
+	callback(Object.assign(get200Response(), { clients: clients.map(c => c.id) }))
 }
 
 export default handleRun

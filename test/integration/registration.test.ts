@@ -66,4 +66,19 @@ describe("Registration event", () => {
 			})
 		})
 	})
+
+	it("returns 500 if metadata value is not an array", (done) => {
+		const registerArgs = {
+			id: "cool",
+			metadata: {
+				group: "coolgroup"
+			}
+		}
+
+		clientSocket.emit("register", registerArgs, (res: any) => {
+			expect(res.status).toEqual(get500Response("").status);
+			done()
+		})
+	})
+
 })
