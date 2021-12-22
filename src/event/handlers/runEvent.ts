@@ -1,6 +1,6 @@
-import { io } from "../.."
 import { get200Response, get500Response } from "../../api"
 import clientCache from "../../clientCache"
+import { getIo } from "../../ioContainer"
 import clientEventFactories from "../clientEvents"
 import { ClientQuerySelector, EventHandler, hasClientQuery } from "../events"
 
@@ -28,7 +28,7 @@ const handleRun: EventHandler = (socket, args, callback) => {
 
 	clients.forEach(client => {
 		console.log(`Trying to run "${command}" on ${JSON.stringify(client)}`)
-		io.to(client.socketId).emit("runlua", JSON.stringify(clientEventFactories.sendCommand(command)))
+		getIo().to(client.socketId).emit("runlua", JSON.stringify(clientEventFactories.sendCommand(command)))
 	})
 
 	callback(get200Response())

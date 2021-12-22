@@ -2,13 +2,13 @@ import { Server, Socket as ServerSocket } from "socket.io";
 import Client, { Socket as ClientSocket } from "socket.io-client"
 import { AddressInfo } from "net"
 import { createServer } from "http"
-import { addListeners } from "../../src/utils";
 
 export const createTestingServer = (onInit: (s: Server, address: AddressInfo) => void): Server => {
 	let io: Server;
 	const httpServer = createServer();
 	io = new Server(httpServer);
-	httpServer.listen(() => {
+	httpServer.listen(0, () => {
+		console.log(httpServer.address())
 		onInit(io, httpServer.address() as AddressInfo);
 	});
 	return io;

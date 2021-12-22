@@ -9,6 +9,7 @@ import clientCache from "../../src/clientCache";
 import { get200Response, get500Response } from "../../src/api";
 import { createTestingSetup } from "./utils";
 
+
 describe("Registration event", () => {
 	let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
 
