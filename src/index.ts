@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import express from "express";
 import http from "http";
-import _ from "lodash"
 import { addListeners } from "./utils";
 import eventHandlers from "./event/handlers"
 import IO from "./ioContainer";
@@ -22,6 +21,12 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}...`)
 })
+
+// Needed for docker ctrl-c
+process.on("SIGINT", function() {
+	process.exit();
+});
+
 
 
 
