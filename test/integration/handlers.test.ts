@@ -19,23 +19,23 @@ const testHandlers: EventHandlerMap = {
 }
 
 describe("event handlers", () => {
-  let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
+	let io: Server, serverSocket: ServerSocket, clientSocket: ClientSocket;
 
-  beforeAll((done) => {
-    createTestingSetup((s) => {
+	beforeAll((done) => {
+		createTestingSetup((s) => {
 			addListeners(testHandlers, s);
 		}).then(r => {
 			[io, serverSocket, clientSocket] = r;
 			done();
 		})
-  });
+	});
 
-  afterAll(() => {
-    io.close();
-    clientSocket.close();
-  });
+	afterAll(() => {
+		io.close();
+		clientSocket.close();
+	});
 
-  it("returns 200 for success callback", (done) => {
+	it("returns 200 for success callback", (done) => {
 		clientSocket.emit("success", {}, (response: any) => {
 			expect(response).toEqual(get200Response());
 			done();
