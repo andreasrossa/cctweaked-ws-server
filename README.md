@@ -1,5 +1,5 @@
 # cctweaked-ws-server 
-[![Test](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/test.yml/badge.svg)](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/test.yml)
+[![Build](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/build-dockerize.yml/badge.svg)](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/build-dockerize.yml)
 
 WebSocket server using Socket.IO.
 
