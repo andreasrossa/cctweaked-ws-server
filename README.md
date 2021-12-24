@@ -1,4 +1,5 @@
-# cctweaked-ws-server
+# cctweaked-ws-server 
+[![Test](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/test.yml/badge.svg)](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/test.yml)
 
 WebSocket server using Socket.IO.
 
