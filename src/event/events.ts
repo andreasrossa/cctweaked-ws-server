@@ -1,6 +1,6 @@
 import { isError } from "lodash"
 import { Socket } from "socket.io"
-import { APIResponse, get500Response } from "../api"
+import { type APIResponse, get500Response } from "../api"
 
 export type EventHandler = (socket: Socket, args: unknown, callback: (response: APIResponse) => void) => void
 
