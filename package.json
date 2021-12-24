@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "ci:test": "jest --ci --reporters=default --reporters=jest-junit",
     "build": "tsc --build",
     "watch": "nodemon src/index.ts"
   },
@@ -17,6 +18,7 @@
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
     "jest": "^27.4.5",
+    "jest-junit": "^13.0.0",
     "nodemon": "^2.0.15",
     "socket.io-client": "^4.4.0",
     "ts-jest": "^27.1.2",
