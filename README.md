@@ -1,5 +1,5 @@
 # cctweaked-ws-server 
-[![Build](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/build-dockerize.yml/badge.svg)](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/build-dockerize.yml)
+[![Build](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/build-dockerize.yml/badge.svg?branch=main)](https://github.com/andreasrossa/cctweaked-ws-server/actions/workflows/build-dockerize.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=andreasrossa_cctweaked-ws-server&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=andreasrossa_cctweaked-ws-server) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=andreasrossa_cctweaked-ws-server&metric=coverage)](https://sonarcloud.io/summary/new_code?id=andreasrossa_cctweaked-ws-server)
 
 WebSocket server using Socket.IO.
 
